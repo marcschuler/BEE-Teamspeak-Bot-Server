@@ -1,0 +1,31 @@
+version: '3.3'
+services:
+  beebot-server:
+    image: registry.gitlab.com/marcschuler/bee-teamspeak-bot-server:latest
+    restart: always
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - SPRING_DATA_MONGODB_PORT=27017
+ #     - SPRING_DATA_MONGODB_USERNAME=root
+ #     - SPRING_DATA_MONGODB_PASSWORD=changethepassword
+      - SPRING_DATA_MONGODB_DATABASE=beebot
+    ports:
+      - 8081:8080
+    depends_on:
+      - mongodb
+  beebot-client:
+    image: registry.gitlab.com/marcschuler/bee-teamspeak-bot-client:latest
+    restart: always
+    depends_on:
+      - beebot-server
+    ports:
+      - 8001:80
+  mongodb:
+    image: mongo:latest
+    restart: always
+    environment:
+  #    MONGO_INITDB_ROOT_USERNAME: root
+  #    MONGO_INITDB_ROOT_PASSWORD: changethepassword
+      MONGO_INITDB_DATABASE: beebot
+    volumes:
+      - /opt/db_beebot:/data/db

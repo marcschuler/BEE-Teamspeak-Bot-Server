@@ -1,10 +1,11 @@
 package de.karlthebee.beebot.dyn;
 
 import com.github.theholywaffle.teamspeak3.api.wrapper.Channel;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DynReplacerTest {
     private final Channel testChannel = new Channel(
@@ -15,15 +16,15 @@ public class DynReplacerTest {
 
     @Test
     public void testNoReplace(){
-        Assert.assertEquals("no string",DynReplacer.replaceAll("no string",null,null));
-        Assert.assertNull(DynReplacer.replaceAll(null, null, null));
-        Assert.assertEquals("",DynReplacer.replaceAll("", null, null));
-        Assert.assertEquals("null",DynReplacer.replaceAll("null", null, null));
+        assertEquals("no string",DynReplacer.replaceAll("no string",null,null));
+        assertNull(DynReplacer.replaceAll(null, null, null));
+        assertEquals("",DynReplacer.replaceAll("", null, null));
+        assertEquals("null",DynReplacer.replaceAll("null", null, null));
     }
 
     @Test
     public void testSimpleReplace(){
-        Assert.assertEquals("You are in channel 'Test Channel'",
+        assertEquals("You are in channel 'Test Channel'",
                 DynReplacer.replaceAll("You are in channel '%channel_name%'",testChannel,null));
     }
 }

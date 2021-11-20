@@ -1,7 +1,9 @@
 package de.karlthebee.beebot;
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RegistryTest {
 
@@ -9,9 +11,9 @@ public class RegistryTest {
 
     @Test
     public void testRegistry() {
-        Assert.assertTrue(registry.getBeeBotByUid("").isEmpty());
-        Assert.assertEquals(0, registry.getBots().size());
-        Assert.assertTrue(registry.getModules().size() > 0);
-        Assert.assertEquals(registry.getModules().get(0), registry.getModuleByShortName(registry.getModules().get(0).getShortName()).get());
+        assertTrue(registry.getBeeBotByUid("").isEmpty());
+        assertEquals(0, registry.getBots().size());
+        assertTrue(registry.getModules().size() > 0);
+        assertEquals(registry.getModules().get(0), registry.getModuleByShortName(registry.getModules().get(0).getShortName()).get());
     }
 }

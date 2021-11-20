@@ -1,5 +1,9 @@
-FROM openjdk:11-alpine
-WORKDIR /opt/beebot
+FROM maven:3-openjdk-17 as builder
+COPY . .
+RUN mvn package -DskipTests
+
+FROM openjdk:17
 ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY --from=builder ${JAR_FILE} beebot-server.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/beebot-server.jar"]

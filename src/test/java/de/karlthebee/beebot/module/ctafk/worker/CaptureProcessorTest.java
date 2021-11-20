@@ -2,8 +2,6 @@ package de.karlthebee.beebot.module.ctafk.worker;
 
 import de.karlthebee.beebot.module.ctafk.data.CaptureTheAFKData;
 import de.karlthebee.beebot.module.ctafk.data.CaptureTheAFKDay;
-import org.apache.tomcat.jni.Local;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -27,24 +25,24 @@ class CaptureProcessorTest {
                         day(TODAY_MINUS_14.toLocalDate()).afkdays(Map.of("uid1",32L,"uid3",16L)).build()));
 
         var processedData = CaptureProcessor.getTimesForUsers(data, 1);
-        Assert.assertEquals(Map.of("uid1",128L,"uid2",64L), processedData);
+        assertEquals(Map.of("uid1",128L,"uid2",64L), processedData);
 
         processedData = CaptureProcessor.getTimesForUsers(data, 0);
-        Assert.assertEquals(Map.of("uid1",128L,"uid2",64L), processedData);
+        assertEquals(Map.of("uid1",128L,"uid2",64L), processedData);
 
         processedData = CaptureProcessor.getTimesForUsers(data,13);
-        Assert.assertEquals(Map.of("uid1",128L,"uid2",64L), processedData);
+        assertEquals(Map.of("uid1",128L,"uid2",64L), processedData);
 
         processedData = CaptureProcessor.getTimesForUsers(data,14);
-        Assert.assertEquals(Map.of("uid1",128L+32L,"uid2",64L,"uid3",16L), processedData);
+        assertEquals(Map.of("uid1",128L+32L,"uid2",64L,"uid3",16L), processedData);
 
         processedData = CaptureProcessor.getTimesForUsers(data,15);
-        Assert.assertEquals(Map.of("uid1",128L+32L,"uid2",64L,"uid3",16L), processedData);
+        assertEquals(Map.of("uid1",128L+32L,"uid2",64L,"uid3",16L), processedData);
 
         processedData = CaptureProcessor.getTimesForUsers(data,Integer.MAX_VALUE);
-        Assert.assertEquals(Map.of("uid1",128L+32L,"uid2",64L,"uid3",16L), processedData);
+        assertEquals(Map.of("uid1",128L+32L,"uid2",64L,"uid3",16L), processedData);
 
-        Assert.assertThrows(IllegalArgumentException.class,() -> {
+        assertThrows(IllegalArgumentException.class,() -> {
             CaptureProcessor.getTimesForUsers(data,-1);
         });
     }
