@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 @Getter
 @Slf4j
 public class Registry {
-    //The file containing the admin token TODO implement a user system with permissions?
+    //The file containing the admin token
     private static final Path TOKEN_FILE = Paths.get("token.txt");
     private static final Registry registry = new Registry();
 
@@ -46,7 +46,7 @@ public class Registry {
     }
 
     private void initToken() {
-        log.info("Loading token");
+        log.info("Loading admin token");
         try {
             if (Files.exists(TOKEN_FILE)) {
                 log.info("Loading admin token from file");
@@ -56,6 +56,7 @@ public class Registry {
             e.printStackTrace();
         }
         if (this.adminToken == null) {
+            log.info("Generating new admin token");
             this.adminToken = Util.generateToken();
             try {
                 Files.writeString(TOKEN_FILE, this.adminToken);
@@ -70,6 +71,7 @@ public class Registry {
      * Loads all subtypes of Module
      */
     private void initModules() {
+        log.info("Initialising modules");
         modules.clear();
         new Reflections("de.karlthebee.beebot.module").getSubTypesOf(Module.class).forEach(m -> {
             try {
@@ -78,6 +80,7 @@ public class Registry {
                     log.error("Found two modules with same short name! '" + module.getShortName() + "' - second entry is ignored");
                     return;
                 }
+                log.info("+ Module " + module.getName() + " (" + module.getShortName() + ")");
                 modules.add(module);
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
@@ -99,6 +102,7 @@ public class Registry {
 
     /**
      * Get a BeeBot instance from uid
+     *
      * @param uid the uid, see beebot definition
      * @return the beebot if avaioable
      */
