@@ -73,7 +73,7 @@ public class Registry {
     private void initModules() {
         log.info("Initialising modules");
         modules.clear();
-        new Reflections("de.karlthebee.beebot.module").getSubTypesOf(Module.class).forEach(m -> {
+        new Reflections().getSubTypesOf(Module.class).forEach(m -> {
             try {
                 var module = m.newInstance();
                 if (getModuleByShortName(module.getShortName()).isPresent()) {
